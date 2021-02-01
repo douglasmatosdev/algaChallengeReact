@@ -1,14 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { sum } from '../store/Calculator/Calculator.actions'
 
-import { connect } from 'react-redux'
+function Calculator() {
+    const dispatch = useDispatch()
+    const result = useSelector((state) => state.calculator)
+    const [a, setA] = useState(0)
+    const [b, setB] = useState(0)
 
-function Calculator({ result }) {
     return <>
 
-        <input type='text' placeholder='a' />
-        <input type='text' placeholder='b' />
+        <input
+            type='text'
+            placeholder='a'
+            value={a}
+            onChange={e => setA(Number(e.target.value))}
+        />
+        <input
+            type='text'
+            placeholder='b'
+            value={b}
+            onChange={e => setB(Number(e.target.value))}
+        />
 
-        <button>somar</button>
+        <button onClick={() => dispatch(sum(a, b))}>
+            somar
+        </button>
         <button>subtrair</button>
 
         <div>{result}</div>
@@ -16,10 +33,15 @@ function Calculator({ result }) {
     </>
 }
 
-function mapStateToProps(state, ownProps) {
-    return {
-        result: state.calculator
-    }
-}
+export default Calculator
 
-export default connect(mapStateToProps)(Calculator)
+/*
+* OLD VERSION
+*/
+// function mapStateToProps(state, ownProps) {
+//     return {
+//         result: state.calculator
+//     }
+// }
+
+// export default connect(mapStateToProps)(Calculator)

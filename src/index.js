@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import HomeView from './views/Home.view'
 
 function App() {
-    return <div>Hello world</div>
+    return <HomeView />
 }
 
 ReactDOM.render(

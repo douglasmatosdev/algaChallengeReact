@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import LineChart from '../../shared/LineChart'
 import AppContainer from '../AppContainer/AppContainer'
 import AppHeader from '../AppHeader'
@@ -8,13 +8,12 @@ import extractPercentage from '../../utils/extractPercentage'
 import Calculator from '../Calculator'
 import { toggleProduct } from '../../store/Products/Products.actions'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAllProducts, selectSelectedProducts, selectSelectedProductsTotalPrice } from '../../store/Products/Products.selector'
+import { selectSelectedProducts, selectSelectedProductsTotalPrice } from '../../store/Products/Products.selector'
 
 function App() {
     const dispatch = useDispatch()
     const colors = ['#62CBC6', '#00ABAD', '#00858C', '#006073', '#004D61']
 
-    const products = useSelector(selectAllProducts)
     const selectedProducts = useSelector(selectSelectedProducts)
     const totalPrice = useSelector(selectSelectedProductsTotalPrice)
 
@@ -29,19 +28,18 @@ function App() {
                 left={
                     <ShoppingList
                         title="Produtos disponíveis"
-                        products={products}
                         onToggle={handleToggle}
                     />}
                 middle={
                     <ShoppingList
                         title="Sua lista de compras"
-                        products={selectedProducts}
+                        displayOnlySelected
                         onToggle={handleToggle}
                     />}
                 right={<div>
                     estatisticas
 
-          <LineChart
+                    <LineChart
                         color={colors[0]}
                         title="saudavel"
                         percentage={extractPercentage(
@@ -85,7 +83,7 @@ function App() {
                     <div style={{ marginTop: 12 }}>
                         <h2 style={{ fontWeight: 400, fontSize: 12, color: '#00364A' }}>
                             previsão de gastos:
-            </h2>
+                        </h2>
                         <div style={{ fontSize: 24 }}>
                             {totalPrice.toLocaleString('pt-br', {
                                 minimumFractionDigits: 2,
